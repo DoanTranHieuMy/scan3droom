@@ -23,11 +23,12 @@ struct StoreCapture {
 }
 
 struct ModelDataCapture: Codable {
-    let url: URL?
+    var url: URL?
     let data: CapturedStructure?
     var filePath: String
     let creationDate: Date
-    let nameUSDZ: String
+    var nameUSDZ: String
+    var isFavorite: Bool = false
 }
 
 enum ModelCaptureType {

@@ -40,6 +40,8 @@ class ScanViewController: UIViewController {
         activityIndicator?.stopAnimating()
     }
     
+    
+    
     @objc func doneScan() {
         self.stopSession()
         doneButton.isHidden = true
@@ -114,6 +116,7 @@ class ScanViewController: UIViewController {
     override func viewWillDisappear(_ flag: Bool) {
         super.viewWillDisappear(flag)
         stopSession()
+        setActiveNavBar()
     }
     
     
@@ -140,7 +143,7 @@ class ScanViewController: UIViewController {
     
     @IBAction func buttonCancelButton(_ sender: Any) {
         stopSession()
-        navigationController?.dismiss(animated: true)
+        tabBarController?.selectedIndex = 0
     }
     
     @IBAction func buttonExportAction(_ sender: Any) {
@@ -174,7 +177,7 @@ class ScanViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Back to Home", style: UIAlertAction.Style.default, handler: { action in
             switch action.style {
             case .default:
-                self.dismiss(animated: true)
+                self.tabBarController?.selectedIndex = 0
                 
                 
             case .cancel:
@@ -233,6 +236,7 @@ extension ScanViewController: RoomCaptureSessionDelegate {
     func captureSession(_ session: RoomCaptureSession, didEndWith data: CapturedRoomData, error: (Error)?) {
         //
         if let error {
+            stopSession()
             return
         }
         Task {
